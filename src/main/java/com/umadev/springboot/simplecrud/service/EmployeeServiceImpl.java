@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.umadev.springboot.simplecrud.dao.EmployeeDAO;
+import com.umadev.springboot.simplecrud.dao.EmployeeRepository;
 import com.umadev.springboot.simplecrud.entity.Employee;
 
 import jakarta.transaction.Transactional;
@@ -13,12 +13,12 @@ import jakarta.transaction.Transactional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
     
     // Add DAO with constructor injection
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO){
-        employeeDAO = theEmployeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository){
+        employeeRepository = theEmployeeRepository;
     }
 
     @Override
