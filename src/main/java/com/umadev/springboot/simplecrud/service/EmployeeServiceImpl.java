@@ -15,7 +15,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     private EmployeeRepository employeeRepository;
     
-    // Add DAO with constructor injection
+    // Add Repository with constructor injection
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository){
         employeeRepository = theEmployeeRepository;
