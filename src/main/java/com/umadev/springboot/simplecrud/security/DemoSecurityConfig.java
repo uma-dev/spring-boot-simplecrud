@@ -46,7 +46,11 @@ public class DemoSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
                 .requestMatchers(HttpMethod.GET, "/api/employees/**").hasRole("EMPLOYEE")
                 .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
+                // In case you are passing ID in JSON (service branch)
+                //.requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
+
+                // If passing ID by URL: 
+                .requestMatchers(HttpMethod.PUT, "/api/employees/**").hasRole("MANAGER")
                 .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN")
         );
         // use HTTP basic authentication
