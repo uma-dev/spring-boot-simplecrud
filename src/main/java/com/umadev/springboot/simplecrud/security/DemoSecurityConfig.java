@@ -15,10 +15,31 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class DemoSecurityConfig {
 
-    // Add support  for JDBC, to not hardcode users
-    @Bean UserDetailsManager userDetailsManager (DataSource dataSource) {
-        
-        return new JdbcUserDetailsManager(dataSource);
+    // Add support  for JDBC, to not hardcode users. This code doesn't change with pwd encryption
+    @Bean 
+    UserDetailsManager userDetailsManager (DataSource dataSource) {
+        // Spring security queries the db each login. In the database: 
+        // Roles and authorities are similar in Spring.The main difference is 
+        // that roles have special semantics. Starting with Spring Security 4, 
+        //the ‘ROLE_‘ prefix is automatically added (if it's not already there)
+        // by any role-related method.
+
+        // Queries for using custom tables/schema
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        // Define query to retrieve a user by username
+        jdbcUserDetailsManager.setUsersByUsernameQuery(
+            // Question mark is the parameter value from login
+            "select user_id, pw, active from members where user_id=?"
+        );
+
+        // Define query to retrieve the authorities/roles
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
+            // Question mark is the parameter value from login
+            "select user_id, role from roles where user_id=?"
+        );
+
+        return jdbcUserDetailsManager;
     }
 
     @Bean 
