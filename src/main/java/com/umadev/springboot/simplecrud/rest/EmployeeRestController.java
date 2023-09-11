@@ -67,6 +67,9 @@ public class EmployeeRestController {
     }
 
     // Add mapping for PUT (update) a new Employee
+    // Calling save() of JPA Repository on an object with predefined 
+    // id will update the corresponding database record rather 
+    // than insert a new one.  
     @PutMapping("/employees")
     public Employee updateEmployee( @RequestBody Employee theEmployee){
 
